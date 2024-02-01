@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Car, validateCar } = require("../models/car");
+const { auth } = require("../middleware/auth");
 
 router.get("/", async (req, res) => {
     try {
