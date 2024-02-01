@@ -39,4 +39,31 @@ router.post("/register", async (req, res) => {
     }
 });
 
+router.post("/login", async (req, res) => {
+    const { error } = validateLogin(req.body);
+    if (error) {
+        return res.status(400).send("Invalid login data.");
+    }
+
+    let user = await User.findOne({ username: req.body.username });
+    if (!user) {
+        return res.status(400).send("No user found with provided username.");
+    }
+
+    const validPassword = await bcrypt.compare(
+        req.body.password,
+        user.password
+    );
+    if (!validPassword) {
+        return res.status(400).send("Invalid Password.");
+    }
+
+    const token = user.generateAuthToken();
+
+    res.status(201)
+        .header("x-auth-token", token)
+        .header("access-control-expose-headers", "x-auth-token")
+        .send({ message: "Login successful." });
+});
+
 module.exports = router;
