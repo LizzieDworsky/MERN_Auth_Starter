@@ -4,6 +4,7 @@ const cors = require("cors");
 const connectDb = require("./db/db");
 
 const auth = require("./routes/auth");
+const cars = require("./routes/cars");
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 connectDb();
 
 app.use("/api/auth", auth);
+app.use("/api/cars", cars);
 
 const PORT = process.env.PORT || 5000;
 
