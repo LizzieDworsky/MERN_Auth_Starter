@@ -5,7 +5,13 @@ const { auth } = require("../middleware/auth");
 
 router.get("/", auth, async (req, res) => {
     try {
-        res.status(200).send("Get all Request.");
+        let user = req.user._id;
+        let cars = await Car.find({ owner: user });
+        if (cars.length > 0) {
+            return res.status(200).send(cars);
+        } else {
+            return res.status(404).send("No cars found.");
+        }
     } catch (error) {
         res.status(500).send(`Internal Server Error ${error}`);
     }
@@ -22,7 +28,7 @@ router.get("/:id", auth, async (req, res) => {
 router.post("/", auth, async (req, res) => {
     try {
         let data = req.body;
-        data.user = req.user._id;
+        data.owner = req.user._id;
         let { error } = validateCar(data);
         if (error) {
             return res.status(400).send("Invalid body for post request.");
