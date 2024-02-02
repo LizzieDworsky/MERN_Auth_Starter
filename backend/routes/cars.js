@@ -19,7 +19,18 @@ router.get("/", auth, async (req, res) => {
 
 router.get("/:id", auth, async (req, res) => {
     try {
-        res.status(200).send("Get by ID Request.");
+        let carId = req.params.id;
+        let user = req.user._id;
+        let car = await Car.findOne({ owner: user, _id: carId });
+        if (car) {
+            return res.status(200).send(car);
+        } else {
+            return res
+                .status(404)
+                .send(
+                    `No car for ${req.user.username} found with an ID of ${carId}.`
+                );
+        }
     } catch (error) {
         res.status(500).send(`Internal Server Error ${error}`);
     }
