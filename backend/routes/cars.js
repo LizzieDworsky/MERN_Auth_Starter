@@ -21,6 +21,7 @@ router.get("/:id", auth, async (req, res) => {
     try {
         let carId = req.params.id;
         let user = req.user._id;
+        // Ensure car belongs to currently logged in user.
         let car = await Car.findOne({ owner: user, _id: carId });
         if (car) {
             return res.status(200).send(car);
@@ -39,6 +40,7 @@ router.get("/:id", auth, async (req, res) => {
 router.post("/", auth, async (req, res) => {
     try {
         let data = req.body;
+        // Set the 'owner' field to the currently logged-in user's ID.
         data.owner = req.user._id;
         let { error } = validateCar(data);
         if (error) {
@@ -55,14 +57,23 @@ router.post("/", auth, async (req, res) => {
 router.put("/:id", auth, async (req, res) => {
     try {
         let data = req.body;
+        // Set the 'owner' field to the currently logged-in user's ID.
         data.owner = req.user._id;
         let { error } = validateCar(data);
         if (error) {
             return res.status(400).send("Invalid body for put request.");
         }
-        let updatedCar = await Car.findByIdAndUpdate(req.params.id, data, {
-            new: true,
-        });
+        // Ensure car belongs to currently logged in user before updating.
+        let updatedCar = await Car.findOneAndUpdate(
+            { _id: req.params.id, owner: req.user._id },
+            data,
+            { new: true }
+        );
+        if (!updatedCar) {
+            return res
+                .status(404)
+                .send("Car not found or user is not the owner.");
+        }
         res.status(200).send(updatedCar);
     } catch (error) {
         res.status(500).send(`Internal Server Error ${error}`);
@@ -71,7 +82,16 @@ router.put("/:id", auth, async (req, res) => {
 
 router.delete("/:id", auth, async (req, res) => {
     try {
-        await Car.findByIdAndDelete(req.params.id);
+        // Ensure car belongs to currently logged in user before deleting.
+        let deletedCar = await Car.findOneAndDelete({
+            _id: req.params.id,
+            owner: req.user._id,
+        });
+        if (!deletedCar) {
+            return res
+                .status(404)
+                .send("Car not found or user is not the owner.");
+        }
         res.status(204).send("");
     } catch (error) {
         res.status(500).send(`Internal Server Error ${error}`);
