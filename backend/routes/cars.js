@@ -54,7 +54,16 @@ router.post("/", auth, async (req, res) => {
 
 router.put("/:id", auth, async (req, res) => {
     try {
-        res.status(200).send("Put Request.");
+        let data = req.body;
+        data.owner = req.user._id;
+        let { error } = validateCar(data);
+        if (error) {
+            return res.status(400).send("Invalid body for put request.");
+        }
+        let updatedCar = await Car.findByIdAndUpdate(req.params.id, data, {
+            new: true,
+        });
+        res.status(200).send(updatedCar);
     } catch (error) {
         res.status(500).send(`Internal Server Error ${error}`);
     }
@@ -62,6 +71,7 @@ router.put("/:id", auth, async (req, res) => {
 
 router.delete("/:id", auth, async (req, res) => {
     try {
+        await Car.findByIdAndDelete(req.params.id);
         res.status(204).send("");
     } catch (error) {
         res.status(500).send(`Internal Server Error ${error}`);
