@@ -1,22 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 import { useAuth } from "../../utils/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+    const navigate = useNavigate();
     const { storeToken, isAuthenticated } = useAuth();
     const [credentials, setCredentials] = useState({
         username: "",
         password: "",
     });
 
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/");
+        }
+    }, [isAuthenticated, navigate]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setCredentials({ ...credentials, [name]: value });
     };
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await axios.post(
+                "http://localhost:5000/api/auth/login",
+                credentials
+            );
+            const token = response.headers["x-auth-token"];
+            if (token) {
+                storeToken(token);
+            }
+        } catch (error) {
+            console.error("Login failed:", error);
+        }
+    };
+
     return (
         <div className="auth-form-container">
             <h1 className="auth-header">Login</h1>
-            <form className="auth-form">
+            <form className="auth-form" onSubmit={(e) => handleSubmit(e)}>
                 <input
                     name="username"
                     type="text"
