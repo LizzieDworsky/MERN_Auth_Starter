@@ -10,10 +10,12 @@ const NavBar = () => {
                 My Awesome App
             </Link>
 
+            {/* Show welcome message if authenticated */}
             {isAuthenticated && (
                 <div className="navbar-user">Welcome, {user.username}!</div>
             )}
 
+            {/* avigation links: Logout for authenticated users, Login/Register for guests  */}
             <div className="navbar-links">
                 {isAuthenticated ? (
                     <div className="navbar-link" onClick={() => logout()}>

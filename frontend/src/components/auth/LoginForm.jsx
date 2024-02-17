@@ -12,17 +12,20 @@ const LoginForm = () => {
         password: "",
     });
 
+    // Effect hook to redirect user to HomePage if already authenticated
     useEffect(() => {
         if (isAuthenticated) {
             navigate("/");
         }
     }, [isAuthenticated, navigate]);
 
+    // Handler for input change to update credentials state
     const handleChange = (e) => {
         const { name, value } = e.target;
         setCredentials({ ...credentials, [name]: value });
     };
 
+    // Handle form submission and login axios post request
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -42,6 +45,7 @@ const LoginForm = () => {
     return (
         <div className="auth-form-container">
             <h1 className="auth-header">Login</h1>
+            {/* Login form render */}
             <form className="auth-form" onSubmit={(e) => handleSubmit(e)}>
                 <input
                     name="username"

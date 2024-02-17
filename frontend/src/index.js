@@ -11,10 +11,12 @@ import HomePage, { getCars } from "./pages/HomePage";
 import { AuthProvider } from "./utils/useAuth";
 import PrivateRoute from "./utils/PrivateRoute";
 
+// Define the application routes using React Router
 const router = createBrowserRouter([
     {
-        path: "",
-        element: <App />,
+        path: "", // Base path
+        element: <App />, // Main layout component
+        // Nested components
         children: [
             {
                 path: "/",
@@ -23,7 +25,7 @@ const router = createBrowserRouter([
                         <HomePage />
                     </PrivateRoute>
                 ),
-                loader: getCars,
+                loader: getCars, // Data loader for HomePage
             },
             {
                 path: "/register",
@@ -37,7 +39,9 @@ const router = createBrowserRouter([
     },
 ]);
 
+// Create a root container in the DOM
 const root = ReactDOM.createRoot(document.getElementById("root"));
+// Render the application wrapped in AuthProvider and RouterProvider
 root.render(
     <React.StrictMode>
         <AuthProvider>
