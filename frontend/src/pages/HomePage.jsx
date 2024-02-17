@@ -27,8 +27,12 @@ export default function HomePage() {
     const { user } = useAuth();
 
     if (cars.length === 0) {
-        return <div>{`${user.username} currently has no cars.`}</div>;
+        return (
+            <div className="home-div">{`${user.username} currently has no cars.`}</div>
+        );
     }
 
-    return <div>{`${user.username} currently has cars.`}</div>;
+    return (
+        <div className="home-div">{`${user.username} currently has cars.`}</div>
+    );
 }
