@@ -6,8 +6,11 @@ import { useAuth } from "../utils/useAuth";
 
 // Function to fetch car data for the authenticated user
 export async function getCars() {
-    let token = localStorage.getItem("token");
     try {
+        let token = localStorage.getItem("token");
+        if (!token) {
+            return [];
+        }
         let response = await axios.get("http://localhost:5000/api/cars", {
             headers: { Authorization: "Bearer " + token },
         });
