@@ -1,5 +1,28 @@
 # MERN Starter Code Project
 
+# Table of Contents
+
+1. [Introduction](#introduction)
+    - [Description](#description)
+    - [Features](#features)
+2. [Getting Started](#getting-started)
+    - [Installation](#installation)
+        - [Clone the Repository](#clone-the-repository)
+        - [Backend Setup](#backend-setup)
+        - [Frontend Setup](#frontend-setup)
+    - [Usage](#usage)
+3. [Project Structure](#project-structure)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
+    - [Configuration Files](#configuration-files)
+4. [Future Work](#future-work)
+    - [Fullstack Enhancements](#fullstack-enhancements)
+    - [Backend Enhancements](#backend-enhancements)
+    - [Frontend Enhancements](#frontend-enhancements)
+5. [Challenges and Lessons Learned](#challenges-and-lessons-learned)
+6. [Contributing](#contributing)
+7. [Acknowledgments](#acknowledgments)
+
 ## Description
 
 This project serves as a comprehensive starter code for building applications using the MERN stack (MongoDB, Express.js, React, and Node.js). It features a secure authentication system using bcrypt-encrypted JWTs and dynamic routing with the latest version of React Router. Designed to be scalable and easy to adapt, this starter code includes a basic implementation of a car management system as an example.
@@ -67,7 +90,7 @@ git clone <repository-url>
     ```
 3. Access the application at `http://localhost:3000` (or the port specified for your React app).
 
-## File Structure
+## Project Structure
 
 The project is organized into a frontend and backend directory, each containing the respective parts of the application.
 
@@ -126,6 +149,14 @@ Each directory and file is crafted to ensure modularity, ease of navigation, and
 -   **Security Considerations**: Reevaluate and bolster the security around sensitive operations, particularly in how tokens are managed (e.g., storage and transmission). Explore more secure alternatives to localStorage for storing tokens, such as HttpOnly cookies or secure in-memory solutions.
 
 ## Challenges and Lessons Learned
+
+-   **Express.js Familiarization**: Embarking on this project with just a couple of weeks of Express.js experience was both a challenge and a rapid learning opportunity. The hands-on application of Express.js principles in building this application served to solidify my understanding and proficiency with the framework, showcasing the value of learning through doing.
+
+-   **Context in React**: Prior to this project, my grasp of React's Context API was limited. This project was instrumental in deepening my understanding of context, particularly in managing global states such as authentication status, which is crucial for a seamless and secure user experience.
+
+-   **Authentication Flow**: While I had previous experience with authentication and encryption, this project allowed me to delve deeper into the intricacies of implementing a secure JWT-based authentication flow. It underscored the critical importance of security measures in web applications and enhanced my capability in crafting secure authentication mechanisms.
+
+-   **React Router**: Integrating the latest version of React Router required adapting to new patterns and approaches, highlighting the importance of keeping up-to-date with evolving libraries.
 
 ## Contributing
 
