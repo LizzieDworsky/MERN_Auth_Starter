@@ -15,7 +15,7 @@ const NavBar = () => {
                 <div className="navbar-user">Welcome, {user.username}!</div>
             )}
 
-            {/* avigation links: Logout for authenticated users, Login/Register for guests  */}
+            {/* Navigation links: Logout for authenticated users, Login/Register for guests  */}
             <div className="navbar-links">
                 {isAuthenticated ? (
                     <div className="navbar-link" onClick={() => logout()}>
